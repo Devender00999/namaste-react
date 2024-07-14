@@ -9,11 +9,20 @@
       <div id="root"></div>
    </body>
 
-   <script>
-      const heading = document.createElement("h1");
-      heading.innerHTML = "Hello World!";
+   <script
+      src="https://unpkg.com/react@18.2.0/umd/react.development.js"
+      crossorigin
+   ></script>
+   <script
+      src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"
+      crossorigin
+   ></script>
 
-      const root = document.getElementById("root");
-      root.appendChild(heading);
+   <script>
+      const heading = React.createElement("h1", {}, "Hello World!");
+
+      const root = ReactDOM.createRoot(document.getElementById("root"));
+
+      root.render(heading);
    </script>
 </html>
