@@ -3,7 +3,9 @@
    "version": "1.0.0",
    "description": "Namaste React by Akshay Saini",
    "scripts": {
-      "test": "jest"
+      "test": "jest",
+      "start": "npx parcel index.html",
+      "build": "npx parcel build index.html"
    },
    "author": "Devender",
    "license": "ISC",
