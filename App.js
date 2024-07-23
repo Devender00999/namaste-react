@@ -1,18 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 
-const parent = React.createElement("div", { id: "parent" }, [
-   React.createElement("div", { id: "child" }, [
-      React.createElement("h1", { id: "heading", key: 1 }, "Hello World from React! 🚀"),
-      React.createElement("h2", { id: "heading2", key: 2 }, "Namaste!"),
-   ]),
-   ,
-   React.createElement("div", { id: "child2" }, [
-      React.createElement("h1", { id: "heading", key: 1 }, "Hello World from React!!"),
-      React.createElement("h2", { id: "heading2", key: 2 }, "Namaste!"),
-   ]),
-]);
+// JSX - HTML like or xml like syntax
+const jsxHeading = (
+   <h1 className="heading" id="hello">
+      Namste React using JSX 🚀{" "}
+   </h1>
+);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
-root.render(parent);
+// it will convert react element object to html element
+root.render(jsxHeading);
