@@ -8,7 +8,16 @@ const jsxHeading = (
    </h1>
 );
 
+// React funcitonal component
+const Title = () => {
+   return <h1>Hello from Functional Component 🚀</h1>;
+};
+
+const Heading = () => {
+   return React.createElement("h1", {}, "Hello World");
+};
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 // it will convert react element object to html element
-root.render(jsxHeading);
+root.render(<Heading />);
