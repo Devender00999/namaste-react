@@ -9,15 +9,27 @@ const jsxHeading = (
 );
 
 // React funcitonal component
-const Title = () => {
-   return <h1>Hello from Functional Component 🚀</h1>;
+const Title = (d) => {
+   console.log(d);
+   return <h1>Title 🚀</h1>;
 };
 
 const Heading = () => {
-   return React.createElement("h1", {}, "Hello World");
+   return React.createElement("h1", {}, "Hello World Heading.");
+};
+
+const Container = () => {
+   return (
+      <div>
+         {jsxHeading}
+         {Title((d = "hello world"))}
+         <Title />
+         <Heading />
+      </div>
+   );
 };
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 // it will convert react element object to html element
-root.render(<Heading />);
+root.render(<Container />);
