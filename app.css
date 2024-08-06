@@ -23,3 +23,28 @@
       }
    }
 }
+
+.res-container {
+   display: flex;
+   gap: 10px;
+   flex-wrap: wrap;
+   justify-content: space-evenly;
+}
+.res-card {
+   width: 200px;
+   height: 300px;
+   padding: 2px;
+   background-color: #d0d0d0;
+}
+
+.res-card:hover {
+   border: 1px solid black;
+}
+.res-card > .res-logo {
+   width: 100%;
+   height: auto;
+}
+
+.search {
+   padding: 10px;
+}
