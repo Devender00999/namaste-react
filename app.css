@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 .header {
    display: flex;
    justify-content: space-between;
@@ -26,23 +30,36 @@
 
 .res-container {
    display: flex;
-   gap: 10px;
+   gap: 20px;
    flex-wrap: wrap;
    justify-content: space-evenly;
 }
 .res-card {
-   width: 200px;
-   height: 300px;
-   padding: 2px;
-   background-color: #d0d0d0;
+   width: 19rem;
+   padding: 5px;
 }
 
-.res-card:hover {
+.res-card > img {
+   width: 100% !important;
+   height: auto !important;
+   object-fit: contain;
+   border-radius: 20px;
+}
+.res-card > .res-card-details {
+   margin: 0.8rem;
+}
+
+.res-card-details > .res-card-heading {
+   margin: 0.8rem 0;
+}
+
+.res-card-details > .res-card:hover {
    border: 1px solid black;
 }
 .res-card > .res-logo {
    width: 100%;
    height: auto;
+   box-shadow: 0px 0px 7px 4px #dfdfdf;
 }
 
 .search {
