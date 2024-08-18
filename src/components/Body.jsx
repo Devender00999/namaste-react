@@ -3,22 +3,37 @@ import { restarurantData } from "../utils/mockData";
 import { useEffect, useState } from "react";
 
 const Body = () => {
-   const [listOfRestarurants, setListOfRestaurant] = useState(restarurantData);
-   const [query, setQuery] = useState("");
+   const [listOfRestarurants, setListOfRestaurant] = useState([]);
 
    useEffect(() => {
-      if (query.length !== 0) {
-         const filtered = listOfRestarurants.filter((item) => {
-            return item.info.name.toLowerCase().includes(query.toLowerCase());
-         });
-         setListOfRestaurant(filtered);
-      } else {
-         setListOfRestaurant(restarurantData);
-      }
-   }, [query]);
+      fetchData();
+   }, []);
 
+   const fetchData = async () => {
+      const response = await fetch(
+         "https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9352403&lng=77.624532&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTINGvvvv"
+      );
+      const data = await response.json();
+      setListOfRestaurant(
+         data?.data?.cards?.[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+      );
+   };
+   // const [query, setQuery] = useState("");
+
+   // useEffect(() => {
+   //    if (query.length !== 0) {
+   //       const filtered = listOfRestarurants.filter((item) => {
+   //          return item.info.name.toLowerCase().includes(query.toLowerCase());
+   //       });
+   //       setListOfRestaurant(filtered);
+   //    } else {
+   //       setListOfRestaurant(restarurantData);
+   //    }
+   // }, [query]);
+
+   if (listOfRestarurants.length === 0) return <h1>Loading...</h1>;
    return (
-      <div className="body">
+      <div className="body mx-[calc(10%+36px)]">
          <div className="m-5 flex justify-between gap-4">
             <div>
                <button
@@ -42,28 +57,19 @@ const Body = () => {
                </button>
             </div>
 
-            <div>
+            {/* <div>
                <input
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   type="search"
                   className="border-[1px] border-gray-400 rounded-md p-1 outline-none"
                />
-            </div>
+            </div> */}
          </div>
-         <div className="res-container">
+         <div className="res-container grid grid-cols-4 gap-8 my-8 mx-4">
             {listOfRestarurants.map((restaurant) => (
                <RestaurantCard key={restaurant.info.id} resData={restaurant.info} />
             ))}
-         </div>
-         <div className="p-6 max-w-sm mx-auto bg-white rounded-xl shadow-lg flex items-center space-x-4">
-            <div className="shrink-0">
-               <img className="size-12" src="/img/logo.svg" alt="ChitChat Logo" />
-            </div>
-            <div>
-               <div className="text-xl font-medium text-black">ChitChat</div>
-               <p className="text-slate-500">You have a new message!</p>
-            </div>
          </div>
       </div>
    );

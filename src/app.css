@@ -29,14 +29,30 @@
 }
 
 .res-container {
-   display: flex;
+   /* display: flex;
    gap: 20px;
    flex-wrap: wrap;
-   justify-content: space-evenly;
+   justify-content: space-evenly; */
+}
+
+.ellipsis-text {
+   overflow: hidden;
+   width: 100%;
+   display: -webkit-box;
+   overflow-wrap: break-word;
+   -webkit-line-clamp: 1;
+   -webkit-box-orient: vertical;
+}
+.cuisines {
+   font-weight: 200;
+   font-size: 16px;
+   line-height: 19px;
+   letter-spacing: -0.3px;
+   color: rgba(2, 6, 12, 0.6);
 }
 .res-card {
-   width: 19rem;
-   padding: 5px;
+   /* width: 19rem; */
+   /* padding: 5px; */
 }
 
 .res-card > img {
@@ -46,11 +62,10 @@
    border-radius: 20px;
 }
 .res-card > .res-card-details {
-   margin: 0.8rem;
+   /* margin: 0.8rem; */
 }
 
 .res-card-details > .res-card-heading {
-   margin: 0.8rem 0;
 }
 
 .res-card-details > .res-card:hover {
