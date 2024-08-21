@@ -80,3 +80,18 @@
 .search {
    padding: 10px;
 }
+
+@keyframes shimmer {
+   0% {
+      background-position: -1000px 0;
+   }
+   100% {
+      background-position: 1000px 0;
+   }
+}
+
+.shimmer {
+   background: linear-gradient(to right, #eeeeee 0%, #dddddd 20%, #eeeeee 40%, #eeeeee 100%);
+   background-size: 1000px 100%;
+   animation: shimmer 1.5s infinite linear;
+}

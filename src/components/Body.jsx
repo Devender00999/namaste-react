@@ -1,6 +1,7 @@
 import RestaurantCard from "./RestaurantCard";
 import { restarurantData } from "../utils/mockData";
 import { useEffect, useState } from "react";
+import Shimmer from "./Shimmer";
 
 const Body = () => {
    const [listOfRestarurants, setListOfRestaurant] = useState([]);
@@ -31,31 +32,36 @@ const Body = () => {
    //    }
    // }, [query]);
 
-   if (listOfRestarurants.length === 0) return <h1>Loading...</h1>;
+   // if (listOfRestarurants.length === 0) return <Shimmer />;
+   const sampleData = Array.from(new Array(8), (v, k) => k);
    return (
       <div className="body mx-[calc(10%+36px)]">
          <div className="m-5 flex justify-between gap-4">
-            <div>
-               <button
-                  type="button"
-                  onClick={() => {
-                     const filteredList = listOfRestarurants.filter(
-                        (item) => item.info.avgRating > 4.2
-                     );
-                     setListOfRestaurant(filteredList);
-                  }}
-                  className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
-               >
-                  Top Rated Restaurant
-               </button>
+            {listOfRestarurants.length === 0 ? (
+               <Shimmer classNames="w-[20rem]" />
+            ) : (
+               <div>
+                  <button
+                     type="button"
+                     onClick={() => {
+                        const filteredList = listOfRestarurants.filter(
+                           (item) => item.info.avgRating > 4.2
+                        );
+                        setListOfRestaurant(filteredList);
+                     }}
+                     className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
+                  >
+                     Top Rated Restaurant
+                  </button>
 
-               <button
-                  className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
-                  onClick={() => setListOfRestaurant(restarurantData)}
-               >
-                  Clear
-               </button>
-            </div>
+                  <button
+                     className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
+                     onClick={() => setListOfRestaurant(restarurantData)}
+                  >
+                     Clear
+                  </button>
+               </div>
+            )}
 
             {/* <div>
                <input
@@ -66,11 +72,19 @@ const Body = () => {
                />
             </div> */}
          </div>
-         <div className="res-container grid grid-cols-4 gap-8 my-8 mx-4">
-            {listOfRestarurants.map((restaurant) => (
-               <RestaurantCard key={restaurant.info.id} resData={restaurant.info} />
-            ))}
-         </div>
+         {listOfRestarurants.length === 0 ? (
+            <div className="res-container grid grid-cols-4 gap-8 my-8 mx-4">
+               {sampleData.map((item) => (
+                  <Shimmer classNames="h-[15rem]" />
+               ))}
+            </div>
+         ) : (
+            <div className="res-container grid grid-cols-4 gap-8 my-8 mx-4">
+               {listOfRestarurants.map((restaurant) => (
+                  <RestaurantCard key={restaurant.info.id} resData={restaurant.info} />
+               ))}
+            </div>
+         )}
       </div>
    );
 };
