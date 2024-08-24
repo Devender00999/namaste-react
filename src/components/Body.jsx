@@ -5,6 +5,7 @@ import Shimmer from "./Shimmer";
 
 const Body = () => {
    const [listOfRestarurants, setListOfRestaurant] = useState([]);
+   const [filteredRestaurants, setFilteredRestaurants] = useState([]);
 
    useEffect(() => {
       fetchData();
@@ -18,7 +19,11 @@ const Body = () => {
       setListOfRestaurant(
          data?.data?.cards?.[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants
       );
+      setFilteredRestaurants(
+         data?.data?.cards?.[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+      );
    };
+   console.log("Body Rendered");
    // const [query, setQuery] = useState("");
 
    // useEffect(() => {
@@ -33,34 +38,66 @@ const Body = () => {
    // }, [query]);
 
    // if (listOfRestarurants.length === 0) return <Shimmer />;
+   const [searchText, setSearchText] = useState("");
    const sampleData = Array.from(new Array(8), (v, k) => k);
    return (
       <div className="body mx-[calc(10%+36px)]">
          <div className="m-5 flex justify-between gap-4">
-            {listOfRestarurants.length === 0 ? (
+            {filteredRestaurants.length === 0 ? (
                <Shimmer classNames="w-[20rem]" />
             ) : (
-               <div>
-                  <button
-                     type="button"
-                     onClick={() => {
-                        const filteredList = listOfRestarurants.filter(
-                           (item) => item.info.avgRating > 4.2
-                        );
-                        setListOfRestaurant(filteredList);
-                     }}
-                     className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
-                  >
-                     Top Rated Restaurant
-                  </button>
+               <>
+                  <div className="flex items-center gap-5">
+                     <input
+                        value={searchText}
+                        onChange={(e) => {
+                           setSearchText(e.target.value);
+                           if (e.target.value.length == 0) {
+                              setFilteredRestaurants(listOfRestarurants);
+                           }
+                        }}
+                        type="text"
+                        id="first_name"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                        placeholder="Enter restaurant name"
+                        required
+                     />
+                     <button
+                        onClick={() => {
+                           const filtered = listOfRestarurants.filter((item) => {
+                              return item.info.name
+                                 .toLowerCase()
+                                 .includes(searchText.toLowerCase());
+                           });
+                           setFilteredRestaurants(filtered);
+                        }}
+                        className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5  dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
+                     >
+                        Search
+                     </button>
+                  </div>
+                  <div className="flex gap-5 items-center">
+                     <button
+                        type="button"
+                        onClick={() => {
+                           const filteredList = listOfRestarurants.filter(
+                              (item) => item.info.avgRating > 4.2
+                           );
+                           setFilteredRestaurants(filteredList);
+                        }}
+                        className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5  dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
+                     >
+                        Top Rated Restaurant
+                     </button>
 
-                  <button
-                     className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
-                     onClick={() => setListOfRestaurant(restarurantData)}
-                  >
-                     Clear
-                  </button>
-               </div>
+                     <button
+                        className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5  dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
+                        onClick={() => setFilteredRestaurants(listOfRestarurants)}
+                     >
+                        Clear
+                     </button>
+                  </div>
+               </>
             )}
 
             {/* <div>
@@ -72,15 +109,15 @@ const Body = () => {
                />
             </div> */}
          </div>
-         {listOfRestarurants.length === 0 ? (
+         {filteredRestaurants.length === 0 ? (
             <div className="res-container grid grid-cols-4 gap-8 my-8 mx-4">
-               {sampleData.map((item) => (
-                  <Shimmer classNames="h-[15rem]" />
+               {sampleData.map((item, key) => (
+                  <Shimmer key={item} classNames="h-[15rem]" />
                ))}
             </div>
          ) : (
             <div className="res-container grid grid-cols-4 gap-8 my-8 mx-4">
-               {listOfRestarurants.map((restaurant) => (
+               {filteredRestaurants.map((restaurant) => (
                   <RestaurantCard key={restaurant.info.id} resData={restaurant.info} />
                ))}
             </div>
