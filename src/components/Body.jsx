@@ -2,6 +2,7 @@ import RestaurantCard from "./RestaurantCard";
 import { restarurantData } from "../utils/mockData";
 import { useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
+import { Link } from "react-router-dom";
 
 const Body = () => {
    const [listOfRestarurants, setListOfRestaurant] = useState([]);
@@ -118,7 +119,13 @@ const Body = () => {
          ) : (
             <div className="res-container grid grid-cols-4 gap-8 my-8 mx-4">
                {filteredRestaurants.map((restaurant) => (
-                  <RestaurantCard key={restaurant.info.id} resData={restaurant.info} />
+                  <Link
+                     to={`restaurants/${restaurant?.cta?.link?.slice(
+                        restaurant?.cta?.link?.lastIndexOf("/") + 1
+                     )}`}
+                  >
+                     <RestaurantCard key={restaurant.info.id} resData={restaurant.info} />
+                  </Link>
                ))}
             </div>
          )}
