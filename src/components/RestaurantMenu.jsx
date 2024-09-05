@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from "react";
+import Dish from "./Dish";
+import { useParams } from "react-router-dom";
 
 const RestaurantMenu = () => {
    const [restaurantInfo, setRestaurantInfo] = useState();
+   const { resId } = useParams();
    const fetchRestaurantData = async () => {
       const res = await fetch(
-         "https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=12.96340&lng=77.58550&restaurantId=77949&catalog_qa=undefined&submitAction=ENTER"
+         `https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=12.96340&lng=77.58550&restaurantId=${parseInt(
+            resId.match(/\d+/)[0]
+         )}&catalog_qa=undefined&submitAction=ENTER`
       );
       const resData = await res.json();
       setRestaurantInfo(resData);
@@ -26,11 +31,19 @@ const RestaurantMenu = () => {
       areaName,
       sla,
       expectationNotifiers,
+      orderabilityCommunication,
    } = restaurantInfo?.data?.cards[2]?.card?.card?.info;
+   const { cards } = restaurantInfo?.data?.cards?.[4]?.groupedCard?.cardGroupMap?.REGULAR;
+   console.log(expectationNotifiers);
    return (
       <div className="flex flex-col m-auto max-w-[800px] gap-2 p-3">
          <span className="text-2xl font-semibold mb-1">{restaurantName}</span>
-         <div className="delivery-section flex flex-col border-[1px] gap-3  p-3 border-[#dfdfdf] rounded-lg">
+         <div className="delivery-section flex flex-col border-[1px] gap-3  p-3 border-[#dfdfdf] rounded-xl overflow-hidden">
+            {orderabilityCommunication?.text && (
+               <span className="-m-3 p-3 bg-[#eb832266] text-[#ff632a] mb-1">
+                  {orderabilityCommunication?.text}
+               </span>
+            )}
             <span className="font-semibold flex items-center gap-2 ">
                <svg
                   className="inline-block"
@@ -88,20 +101,36 @@ const RestaurantMenu = () => {
                   <div className="text-sm font-semibold">{sla?.slaString}</div>
                </div>
             </div>
-            <div
-               className="text-sm border-t-[1px] pt-2 -mr-[12px] -ml-[12px] px-3"
-               dangerouslySetInnerHTML={{ __html: expectationNotifiers?.at(0)?.text }}
-            ></div>
+            {expectationNotifiers?.at(0)?.text && (
+               <div
+                  className="text-sm border-t-[1px] pt-2 -mr-[12px] -ml-[12px] px-3"
+                  dangerouslySetInnerHTML={{ __html: expectationNotifiers?.at(0)?.text }}
+               ></div>
+            )}
          </div>
-         {/* <svg
-            origin="https://www.swiggy.com"
-            aria-hidden="true"
-            height="24"
-            width="24"
-            class="sc-gEvEer buqVUw"
-         >
-            <use xlinkHref="https://www.swiggy.com/core/sprite-2c957cbb.svg#artDecoLeft24"></use>
-         </svg> */}
+         <h4 className="text-center m-3 text-2xl italic">~~ Menu ~~</h4>
+         <div>
+            {cards
+               ?.filter(
+                  (item) =>
+                     item?.card?.card?.["@type"] ===
+                     "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
+               )
+               ?.map((item) => {
+                  const { title, itemCards } = item?.card?.card;
+                  return (
+                     <div className="">
+                        <span className="font-bold inline-block mb-5">
+                           {title} ({itemCards?.length || 0})
+                        </span>
+                        {itemCards?.map((menu) => {
+                           const { info } = menu?.card;
+                           return <Dish dishInfo={info} />;
+                        })}
+                     </div>
+                  );
+               })}
+         </div>
       </div>
    );
 };

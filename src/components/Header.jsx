@@ -4,11 +4,12 @@ import { Link } from "react-router-dom";
 
 const Header = () => {
    const [loginBtn, setLoginBtn] = useState("Login");
-   console.log("Header rendered");
    return (
       <nav className="header">
          <div className="logo-container">
-            <img className="logo" src={LOGO_URL} />
+            <Link to="/">
+               <img className="logo" src={LOGO_URL} />
+            </Link>
          </div>
          <ul className="nav-container">
             <li className="nav-item">
