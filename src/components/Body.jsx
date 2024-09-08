@@ -115,6 +115,7 @@ const Body = () => {
                      to={`restaurants/${restaurant?.cta?.link?.slice(
                         restaurant?.cta?.link?.lastIndexOf("/") + 1
                      )}`}
+                     key={restaurant.info.id}
                   >
                      <RestaurantCard key={restaurant.info.id} resData={restaurant.info} />
                   </Link>

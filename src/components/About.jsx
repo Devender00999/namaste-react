@@ -9,7 +9,15 @@ export default class About extends Component {
 
    componentDidMount() {
       // console.log("Parent componentDidMount");
+      this.timer = setInterval(() => {
+         console.log("Inside componentDidMount");
+      }, 1000);
    }
+
+   componentWillUnmount() {
+      clearInterval(this.timer);
+   }
+
    render() {
       // console.log("Parent render");
       return (
