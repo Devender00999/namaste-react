@@ -10,11 +10,11 @@ class UserClass extends Component {
             avatar_url: "https://dummy.com",
          },
       };
-      console.log(this.props.name + " constructor");
+      // console.log(this.props.name + " constructor");
    }
 
    async componentDidMount() {
-      console.log(this.props.name + " componentDidMount");
+      // console.log(this.props.name + " componentDidMount");
       const data = await fetch("https://api.github.com/users/akshaymarch7");
       const json = await data.json();
       this.setState({ userInfo: json });
@@ -22,7 +22,7 @@ class UserClass extends Component {
    }
 
    render() {
-      console.log(this.props.name + " render");
+      // console.log(this.props.name + " render");
       const handleOnclick = () => {
          this.setState({ name: "Akshay" });
       };
