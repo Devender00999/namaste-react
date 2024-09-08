@@ -1,26 +1,16 @@
 import React, { useEffect, useState } from "react";
 import Dish from "./Dish";
 import { useParams } from "react-router-dom";
+import useRestaurantMenu from "../utils/useRestaurantMenu";
 
 const RestaurantMenu = () => {
-   const [restaurantInfo, setRestaurantInfo] = useState();
    const { resId } = useParams();
-   const fetchRestaurantData = async () => {
-      const res = await fetch(
-         `https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=12.96340&lng=77.58550&restaurantId=${parseInt(
-            resId.match(/\d+/)[0]
-         )}&catalog_qa=undefined&submitAction=ENTER`
-      );
-      const resData = await res.json();
-      setRestaurantInfo(resData);
-   };
+   const restaurantMenu = useRestaurantMenu(resId);
 
-   useEffect(() => {
-      fetchRestaurantData();
-   }, []);
+   console.log({ restaurantMenu });
 
-   if (!restaurantInfo) return <div>Loading...</div>;
-   const { text: restaurantName } = restaurantInfo?.data?.cards?.at(0)?.card?.card;
+   if (!restaurantMenu) return <div>Loading...</div>;
+   const { text: restaurantName } = restaurantMenu?.cards?.at(0)?.card?.card;
 
    // getting res info
    const {
@@ -32,8 +22,8 @@ const RestaurantMenu = () => {
       sla,
       expectationNotifiers,
       orderabilityCommunication,
-   } = restaurantInfo?.data?.cards[2]?.card?.card?.info;
-   const { cards } = restaurantInfo?.data?.cards?.[4]?.groupedCard?.cardGroupMap?.REGULAR;
+   } = restaurantMenu?.cards[2]?.card?.card?.info;
+   const { cards } = restaurantMenu?.cards?.[4]?.groupedCard?.cardGroupMap?.REGULAR;
    console.log(expectationNotifiers);
    return (
       <div className="flex flex-col m-auto max-w-[800px] gap-2 p-3">
