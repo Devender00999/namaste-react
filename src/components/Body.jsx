@@ -3,10 +3,14 @@ import { restarurantData } from "../utils/mockData";
 import { useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
+import useOnlineStatus from "../utils/useOnlineStatus";
 
 const Body = () => {
    const [listOfRestarurants, setListOfRestaurant] = useState([]);
    const [filteredRestaurants, setFilteredRestaurants] = useState([]);
+   const [searchText, setSearchText] = useState("");
+
+   const onlineStatus = useOnlineStatus();
 
    useEffect(() => {
       fetchData();
@@ -24,22 +28,10 @@ const Body = () => {
          data?.data?.cards?.[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants
       );
    };
-   console.log("Body Rendered");
-   // const [query, setQuery] = useState("");
 
-   // useEffect(() => {
-   //    if (query.length !== 0) {
-   //       const filtered = listOfRestarurants.filter((item) => {
-   //          return item.info.name.toLowerCase().includes(query.toLowerCase());
-   //       });
-   //       setListOfRestaurant(filtered);
-   //    } else {
-   //       setListOfRestaurant(restarurantData);
-   //    }
-   // }, [query]);
+   if (onlineStatus === false)
+      return <h1>Looks like your are offline. Please check your internet connection.</h1>;
 
-   // if (listOfRestarurants.length === 0) return <Shimmer />;
-   const [searchText, setSearchText] = useState("");
    const sampleData = Array.from(new Array(8), (v, k) => k);
    return (
       <div className="body mx-[calc(10%+36px)]">
