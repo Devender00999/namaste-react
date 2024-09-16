@@ -7,13 +7,13 @@ const Header = () => {
    const [loginBtn, setLoginBtn] = useState("Login");
    const isOnline = useOnlineStatus();
    return (
-      <nav className="header">
-         <div className="logo-container">
+      <nav className="flex items-center justify-between shadow-md mb-4">
+         <div className="">
             <Link to="/">
-               <img className="logo" src={LOGO_URL} />
+               <img className="w-20" src={LOGO_URL} />
             </Link>
          </div>
-         <ul className="nav-container">
+         <ul className="flex gap-4 mr-4">
             <li className="nav-item">{isOnline ? "✅ Online" : "❌ Offline"}</li>
             <li className="nav-item">
                <Link to="/">Home</Link>
