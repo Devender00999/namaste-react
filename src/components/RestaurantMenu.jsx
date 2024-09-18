@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import Dish from "./Dish";
 import { useParams } from "react-router-dom";
 import useRestaurantMenu from "../utils/useRestaurantMenu";
+import RestaurantCategory from "./RestaurantCategory";
 
 const RestaurantMenu = () => {
    const { resId } = useParams();
    const restaurantMenu = useRestaurantMenu(resId);
 
-   console.log({ restaurantMenu });
 
    if (!restaurantMenu) return <div>Loading...</div>;
    const { text: restaurantName } = restaurantMenu?.cards?.at(0)?.card?.card;
@@ -24,7 +24,6 @@ const RestaurantMenu = () => {
       orderabilityCommunication,
    } = restaurantMenu?.cards[2]?.card?.card?.info;
    const { cards } = restaurantMenu?.cards?.[4]?.groupedCard?.cardGroupMap?.REGULAR;
-   console.log(expectationNotifiers);
    return (
       <div className="flex flex-col m-auto max-w-[800px] gap-2 p-3">
          <span className="text-2xl font-semibold mb-1">{restaurantName}</span>
@@ -107,17 +106,8 @@ const RestaurantMenu = () => {
                      "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
                )
                ?.map((item) => {
-                  const { title, itemCards } = item?.card?.card;
                   return (
-                     <div className="">
-                        <span className="font-bold inline-block mb-5">
-                           {title} ({itemCards?.length || 0})
-                        </span>
-                        {itemCards?.map((menu) => {
-                           const { info } = menu?.card;
-                           return <Dish dishInfo={info} />;
-                        })}
-                     </div>
+                     <RestaurantCategory key={item?.card?.card?.title} data={item?.card?.card} />
                   );
                })}
          </div>
