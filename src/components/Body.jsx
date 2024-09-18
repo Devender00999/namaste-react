@@ -1,4 +1,4 @@
-import RestaurantCard from "./RestaurantCard";
+import RestaurantCard, { withPromotedLabel } from "./RestaurantCard";
 import { restarurantData } from "../utils/mockData";
 import { useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
@@ -31,6 +31,8 @@ const Body = () => {
 
    if (onlineStatus === false)
       return <h1>Looks like your are offline. Please check your internet connection.</h1>;
+
+   const RestaurantCardPromoted = withPromotedLabel(RestaurantCard);
 
    const sampleData = Array.from(new Array(8), (v, k) => k);
    return (
@@ -117,7 +119,14 @@ const Body = () => {
                      )}`}
                      key={restaurant.info.id}
                   >
-                     <RestaurantCard key={restaurant.info.id} resData={restaurant.info} />
+                     {restaurant?.info?.promoted ? (
+                        <RestaurantCardPromoted
+                           key={restaurant.info.id}
+                           resData={restaurant.info}
+                        />
+                     ) : (
+                        <RestaurantCard key={restaurant.info.id} resData={restaurant.info} />
+                     )}
                   </Link>
                ))}
             </div>

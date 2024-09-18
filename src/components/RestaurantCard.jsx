@@ -64,13 +64,23 @@ const RestaurantCard = (props) => {
                • {sla?.slaString}
             </div>
             <h4 className="text-ellipsis cuisines ellipsis-text overflow-hidden">
-               {" "}
                {cuisines?.join(", ")}
             </h4>
             <span className="cuisines">{areaName}</span>
          </div>
       </div>
    );
+};
+
+export const withPromotedLabel = (RestaurantCard) => {
+   return (props) => {
+      return (
+         <div>
+            <label>Promoted</label>
+            <RestaurantCard {...props} />
+         </div>
+      );
+   };
 };
 
 export default RestaurantCard;
