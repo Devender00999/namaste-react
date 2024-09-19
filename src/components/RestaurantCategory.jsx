@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import Dish from "./Dish";
 
-const RestaurantCategory = ({ data }) => {
-   const [isCollapsed, setIsCollapsed] = useState(false);
+const RestaurantCategory = ({ data, onChangeIndex, isCollapsed }) => {
+   // const [isCollapsed, setIsCollapsed] = useState(false);
    return (
       <div className="flex flex-col gap-4 border-b-[1.5rem]">
          {/* {Header} */}
@@ -11,7 +11,10 @@ const RestaurantCategory = ({ data }) => {
             <span>
                {data.title} ({data.itemCards?.length || 0})
             </span>
-            <span className="cursor-pointer" onClick={() => setIsCollapsed((prev) => !prev)}>
+            <span
+               className="cursor-pointer"
+               onClick={() => (isCollapsed ? onChangeIndex(data.title) : onChangeIndex(null))}
+            >
                ⬇️
             </span>
          </div>

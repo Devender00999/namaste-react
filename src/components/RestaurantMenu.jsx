@@ -7,7 +7,7 @@ import RestaurantCategory from "./RestaurantCategory";
 const RestaurantMenu = () => {
    const { resId } = useParams();
    const restaurantMenu = useRestaurantMenu(resId);
-
+   const [showIndex, setShowIndex] = useState(-1);
 
    if (!restaurantMenu) return <div>Loading...</div>;
    const { text: restaurantName } = restaurantMenu?.cards?.at(0)?.card?.card;
@@ -107,7 +107,12 @@ const RestaurantMenu = () => {
                )
                ?.map((item) => {
                   return (
-                     <RestaurantCategory key={item?.card?.card?.title} data={item?.card?.card} />
+                     <RestaurantCategory
+                        onChangeIndex={setShowIndex}
+                        key={item?.card?.card?.title}
+                        data={item?.card?.card}
+                        isCollapsed={!(item?.card?.card?.title === showIndex)}
+                     />
                   );
                })}
          </div>
