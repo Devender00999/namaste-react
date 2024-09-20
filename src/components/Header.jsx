@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { LOGO_URL } from "../utils/constants";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import UserContext from "../utils/UserContext";
 
 const Header = () => {
    const [loginBtn, setLoginBtn] = useState("Login");
+   const { loggedInUser } = useContext(UserContext);
    const isOnline = useOnlineStatus();
    return (
       <nav className="flex items-center justify-between shadow-md mb-4">
@@ -34,6 +36,7 @@ const Header = () => {
             >
                {loginBtn}
             </li>
+            <li className="nav-item">{loggedInUser}</li>
          </ul>
       </nav>
    );

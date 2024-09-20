@@ -1,9 +1,10 @@
 import RestaurantCard, { withPromotedLabel } from "./RestaurantCard";
 import { restarurantData } from "../utils/mockData";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import UserContext from "../utils/UserContext";
 
 const Body = () => {
    const [listOfRestarurants, setListOfRestaurant] = useState([]);
@@ -34,6 +35,8 @@ const Body = () => {
 
    const RestaurantCardPromoted = withPromotedLabel(RestaurantCard);
 
+   const { loggedInUser, setUserName } = useContext(UserContext);
+
    const sampleData = Array.from(new Array(8), (v, k) => k);
    return (
       <div className="body mx-[calc(10%+36px)]">
@@ -57,6 +60,7 @@ const Body = () => {
                         placeholder="Enter restaurant name"
                         required
                      />
+                     <input onChange={(e) => setUserName(e.target.value)} />
                      <button
                         onClick={() => {
                            const filtered = listOfRestarurants.filter((item) => {
