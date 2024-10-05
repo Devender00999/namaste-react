@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
 import UserContext from "../utils/UserContext";
 import { useSelector } from "react-redux";
+import "@testing-library/jest-dom";
 
 const Header = () => {
    const [loginBtn, setLoginBtn] = useState("Login");
@@ -39,7 +40,7 @@ const Header = () => {
                className="nav-item"
                onClick={() => setLoginBtn((prev) => (prev === "Login" ? "Logout" : "Login"))}
             >
-               {loginBtn}
+               <button>{loginBtn}</button>
             </li>
             <li className="nav-item">{loggedInUser}</li>
          </ul>
