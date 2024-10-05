@@ -1,6 +1,7 @@
 export const restarurantData = [
    {
       info: {
+         promoted: true,
          id: "352791",
          name: "Grameen Kulfi",
          cloudinaryImageId: "gjcslopkyvnsc1gjjguq",
