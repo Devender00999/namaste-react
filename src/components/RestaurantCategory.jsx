@@ -8,7 +8,7 @@ const RestaurantCategory = ({ data, onChangeIndex, isCollapsed }) => {
          {/* {Header} */}
          {/* Accordian Body */}
          <div className="font-bold flex justify-between py-4 ">
-            <span>
+            <span onClick={() => (isCollapsed ? onChangeIndex(data.title) : onChangeIndex(null))}>
                {data.title} ({data.itemCards?.length || 0})
             </span>
             <span

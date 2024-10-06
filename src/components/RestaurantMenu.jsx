@@ -111,6 +111,7 @@ const RestaurantMenu = () => {
                         key={item?.card?.card?.title}
                         data={item?.card?.card}
                         isCollapsed={!(item?.card?.card?.title === showIndex)}
+                        data-testid="rest-menu"
                      />
                   );
                })}

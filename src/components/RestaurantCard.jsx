@@ -5,7 +5,10 @@ const RestaurantCard = (props) => {
    const { cloudinaryImageId, name, cuisines, avgRating, areaName, aggregatedDiscountInfoV3, sla } =
       resData;
    return (
-      <div className="hover:scale-95 res-card grid gap-3 transition-all duration-200">
+      <div
+         className="hover:scale-95 res-card grid gap-3 transition-all duration-200"
+         data-testid="res-card"
+      >
          <div className="w-full rounded-2xl overflow-hidden relative">
             <img
                className="res-logo"

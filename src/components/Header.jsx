@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
 import UserContext from "../utils/UserContext";
 import { useSelector } from "react-redux";
-import "@testing-library/jest-dom";
 
 const Header = () => {
    const [loginBtn, setLoginBtn] = useState("Login");

@@ -3,6 +3,7 @@ import Header from "../Header";
 import { Provider } from "react-redux";
 import appStore from "../../utils/appStore";
 import { BrowserRouter } from "react-router-dom";
+import "@testing-library/jest-dom";
 
 describe("Header component test", () => {
    it("should load header component with login button", () => {

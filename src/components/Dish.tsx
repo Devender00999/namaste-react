@@ -11,7 +11,7 @@ const Dish = ({ dishInfo }) => {
       dispatch(addItem(dishInfo));
    };
    return (
-      <div className="flex border-b-2 last:border-b-0 mb-10 pb-10" key={id}>
+      <div className="flex border-b-2 last:border-b-0 mb-10 pb-10" key={id} data-testid="food-item">
          <div className="flex-1">
             <span>{name}</span>
 

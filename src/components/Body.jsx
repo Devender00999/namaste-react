@@ -60,7 +60,6 @@ const Body = () => {
                         placeholder="Enter restaurant name"
                         required
                      />
-                     <input onChange={(e) => setUserName(e.target.value)} />
                      <button
                         onClick={() => {
                            const filtered = listOfRestarurants.filter((item) => {
@@ -80,7 +79,7 @@ const Body = () => {
                         type="button"
                         onClick={() => {
                            const filteredList = listOfRestarurants.filter(
-                              (item) => item.info.avgRating > 4.2
+                              (item) => item.info.avgRating > 4.5
                            );
                            setFilteredRestaurants(filteredList);
                         }}
@@ -122,6 +121,8 @@ const Body = () => {
                         restaurant?.cta?.link?.lastIndexOf("/") + 1
                      )}`}
                      key={restaurant.info.id}
+                     data-testid="res-card-link"
+                     className="test"
                   >
                      {restaurant?.info?.promoted ? (
                         <RestaurantCardPromoted
