@@ -1,21 +1,24 @@
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import React from "react";
-import app from "../../firebase";
 import { Link } from "react-router-dom";
+import { useFirebase } from "../utils/FirebaseContext";
 
 const SignupPage = () => {
-   const auth = getAuth(app);
+   const { signupWithEmailPass } = useFirebase();
 
    const handleSubmit = (e) => {
       e.preventDefault();
       const email = e.target[0].value;
       const password = e.target[1].value;
+      console.log(email, password);
       // Handle form submission logic
-      createUserWithEmailAndPassword(auth, email, password)
-         .then((res) => alert(res))
+      signupWithEmailPass(email, password)
+         .then((res) => {
+            console.log(res);
+            alert("Signup success");
+         })
          .catch((res) => {
-            console.log(res?.customData);
-            alert(res?.customData._tokenResponse?.error?.message);
+            console.log(res);
+            alert("Signup failed");
          });
    };
 

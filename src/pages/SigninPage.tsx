@@ -1,25 +1,23 @@
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import React from "react";
-import app from "../../firebase";
 import { Link } from "react-router-dom";
+import { useFirebase } from "../utils/FirebaseContext";
 
 const LoginPage = () => {
-   const auth = getAuth(app);
+   const { loginWithEmailPass } = useFirebase();
 
    const handleSubmit = (e) => {
       e.preventDefault();
       const email = e.target[0].value;
       const password = e.target[1].value;
       // Handle form submission logic
-      signInWithEmailAndPassword(auth, email, password)
+      loginWithEmailPass(email, password)
          .then((res) => {
             console.log(res);
-            alert("Login Successful.");
+            alert("login success");
          })
-
          .catch((res) => {
             console.log(res);
-            alert("Error");
+            alert("login failed");
          });
    };
 

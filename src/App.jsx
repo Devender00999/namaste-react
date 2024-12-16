@@ -1,23 +1,22 @@
 import React, { lazy, Suspense, useState } from "react";
 import ReactDOM from "react-dom/client";
-import "./components/Header";
-import "./app.css";
-import Header from "./components/Header";
-import Body from "./components/Body";
+import { Provider } from "react-redux";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
+import "./app.css";
 import About from "./components/About";
+import Body from "./components/Body";
+import Cart from "./components/Cart";
 import Contact from "./components/Contact";
 import Error from "./components/Error";
+import "./components/Header";
+import Header from "./components/Header";
 import RestaurantMenu from "./components/RestaurantMenu";
-import UserContext from "./utils/UserContext";
-import { Provider } from "react-redux";
 import appStore from "./utils/appStore";
-import Cart from "./components/Cart";
+import UserContext from "./utils/UserContext";
 
-import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
-import app from "../firebase";
-import SignupPage from "./pages/SignupPage";
 import LoginPage from "./pages/SigninPage";
+import SignupPage from "./pages/SignupPage";
+import { FirebaseProvider } from "./utils/FirebaseContext";
 const Grocery = lazy(() => import("./components/Grocery"));
 
 const AppLayout = () => {
@@ -25,12 +24,14 @@ const AppLayout = () => {
 
    return (
       <Provider store={appStore}>
-         <UserContext.Provider value={{ loggedInUser: userName, setUserName }}>
-            <div className="app">
-               <Header />
-               <Outlet />
-            </div>
-         </UserContext.Provider>
+         <FirebaseProvider>
+            <UserContext.Provider value={{ loggedInUser: userName, setUserName }}>
+               <div className="app">
+                  <Header />
+                  <Outlet />
+               </div>
+            </UserContext.Provider>
+         </FirebaseProvider>
       </Provider>
    );
 };
