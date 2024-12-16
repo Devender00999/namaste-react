@@ -37,9 +37,9 @@ const Header = () => {
             </li>
             <li
                className="nav-item"
-               onClick={() => setLoginBtn((prev) => (prev === "Login" ? "Logout" : "Login"))}
+               // onClick={() => setLoginBtn((prev) => (prev === "Login" ? "Sign up" : "Login"))}
             >
-               <button>{loginBtn}</button>
+               <Link to={loginBtn === "Login" ? "/login" : "/signup"}>{loginBtn}</Link>
             </li>
             <li className="nav-item">{loggedInUser}</li>
          </ul>

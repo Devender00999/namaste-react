@@ -14,10 +14,15 @@ import { Provider } from "react-redux";
 import appStore from "./utils/appStore";
 import Cart from "./components/Cart";
 
+import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
+import app from "../firebase";
+import SignupPage from "./pages/SignupPage";
+import LoginPage from "./pages/SigninPage";
 const Grocery = lazy(() => import("./components/Grocery"));
 
 const AppLayout = () => {
    const [userName, setUserName] = useState("Devender Kumar");
+
    return (
       <Provider store={appStore}>
          <UserContext.Provider value={{ loggedInUser: userName, setUserName }}>
@@ -51,6 +56,8 @@ const router = createBrowserRouter([
             path: "/cart",
             element: <Cart />,
          },
+         { path: "/signup", element: <SignupPage /> },
+         { path: "/login", element: <LoginPage /> },
       ],
       errorElement: <Error />,
    },
