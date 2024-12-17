@@ -4,11 +4,13 @@ import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
 import UserContext from "../utils/UserContext";
 import { useSelector } from "react-redux";
+import { useFirebase } from "../utils/FirebaseContext";
 
 const Header = () => {
    const [loginBtn, setLoginBtn] = useState("Login");
    const { loggedInUser } = useContext(UserContext);
-   const isOnline = useOnlineStatus();
+   const { user, logout } = useFirebase();
+   const isOnline = useOnlineStatus(); 
 
    const cart = useSelector((store) => store.cart.items);
    return (
@@ -35,13 +37,14 @@ const Header = () => {
             <li className="nav-item font-semibold">
                <Link to="/cart">Cart ({cart?.length || 0})</Link>
             </li>
-            <li
-               className="nav-item"
-               // onClick={() => setLoginBtn((prev) => (prev === "Login" ? "Sign up" : "Login"))}
-            >
-               <Link to={loginBtn === "Login" ? "/login" : "/signup"}>{loginBtn}</Link>
+            <li className="nav-item">
+               {user ? (
+                  <button onClick={() => logout()}>Logout</button>
+               ) : (
+                  <Link to={"/login"}>{loginBtn}</Link>
+               )}
             </li>
-            <li className="nav-item">{loggedInUser}</li>
+            {user && <li className="nav-item">{user?.email}</li>}
          </ul>
       </nav>
    );
