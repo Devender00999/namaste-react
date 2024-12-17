@@ -5,7 +5,9 @@ import {
    signOut,
    UserCredential,
    onAuthStateChanged,
+   signInWithPopup,
    User,
+   GoogleAuthProvider,
 } from "firebase/auth";
 import React, { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import app from "../../firebase";
@@ -15,6 +17,7 @@ type FirebaseContextType = {
    loginWithEmailPass: (email: string, password: string) => Promise<UserCredential>;
    logout: () => void;
    user: User | null;
+   loginWithGoogle: () => void;
 };
 
 const FirebaseContext = createContext<FirebaseContextType | null>(null);
@@ -38,6 +41,11 @@ export const FirebaseProvider = (props: { children: ReactNode }) => {
       return signInWithEmailAndPassword(auth, email, password);
    };
 
+   const loginWithGoogle = () => {
+      const provider = new GoogleAuthProvider();
+      signInWithPopup(auth, provider);
+   };
+
    const logout = () => signOut(auth);
 
    useEffect(() => {
@@ -46,8 +54,20 @@ export const FirebaseProvider = (props: { children: ReactNode }) => {
       });
    }, []);
 
+   useEffect(() => {
+      console.log(user);
+   }, [user]);
+
    return (
-      <FirebaseContext.Provider  value={{ signupWithEmailPass, loginWithEmailPass, logout, user }}>
+      <FirebaseContext.Provider
+         value={{
+            signupWithEmailPass,
+            loginWithEmailPass,
+            logout,
+            user,
+            loginWithGoogle,
+         }}
+      >
          {props.children}
       </FirebaseContext.Provider>
    );

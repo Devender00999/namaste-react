@@ -26,9 +26,11 @@ const AppLayout = () => {
       <Provider store={appStore}>
          <FirebaseProvider>
             <UserContext.Provider value={{ loggedInUser: userName, setUserName }}>
-               <div className="app">
+               <div className="app min-h-[100vh] flex flex-col">
                   <Header />
-                  <Outlet />
+                  <div className="flex-1">
+                     <Outlet />
+                  </div>
                </div>
             </UserContext.Provider>
          </FirebaseProvider>

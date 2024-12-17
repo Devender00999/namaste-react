@@ -1,9 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useFirebase } from "../utils/FirebaseContext";
+import { Icon } from "@iconify/react/dist/iconify.js";
 
 const LoginPage = () => {
-   const { loginWithEmailPass } = useFirebase();
+   const { loginWithEmailPass, loginWithGoogle } = useFirebase();
 
    const handleSubmit = (e) => {
       e.preventDefault();
@@ -62,12 +63,22 @@ const LoginPage = () => {
                   >
                      Login
                   </button>
-                  <span>
+                  <button
+                     onClick={(e) => {
+                        e.preventDefault();
+                        loginWithGoogle();
+                     }}
+                     className="w-full flex items-center justify-center px-4 py-2 rounded-lg mt-4 gap-2 bg-[#f2f2f2] border-sky-100"
+                  >
+                     <span>Login with</span>{" "}
+                     <Icon className="text-2xl" icon="flat-color-icons:google" />
+                  </button>
+                  <div className="mt-2">
                      New user?{" "}
                      <Link className="text-blue-500" to="/signup">
                         signup now
                      </Link>
-                  </span>
+                  </div>
                </div>
             </form>
          </div>

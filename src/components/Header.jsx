@@ -7,17 +7,15 @@ import { useSelector } from "react-redux";
 import { useFirebase } from "../utils/FirebaseContext";
 
 const Header = () => {
-   const [loginBtn, setLoginBtn] = useState("Login");
-   const { loggedInUser } = useContext(UserContext);
    const { user, logout } = useFirebase();
-   const isOnline = useOnlineStatus(); 
+   const isOnline = useOnlineStatus();
 
    const cart = useSelector((store) => store.cart.items);
    return (
-      <nav className="flex items-center justify-between shadow-md mb-4 sticky top-0 bg-white">
+      <nav className="flex h-16 items-center justify-between shadow-md sticky top-0 bg-white">
          <div className="">
             <Link to="/">
-               <img className="w-20" src={LOGO_URL} />
+               <img className="w-16" src={LOGO_URL} />
             </Link>
          </div>
          <ul className="flex gap-4 mr-4">
@@ -41,10 +39,10 @@ const Header = () => {
                {user ? (
                   <button onClick={() => logout()}>Logout</button>
                ) : (
-                  <Link to={"/login"}>{loginBtn}</Link>
+                  <Link to={"/login"}>Login</Link>
                )}
             </li>
-            {user && <li className="nav-item">{user?.email}</li>}
+            {user && <li className="nav-item">{user?.displayName ?? user?.email}</li>}
          </ul>
       </nav>
    );
